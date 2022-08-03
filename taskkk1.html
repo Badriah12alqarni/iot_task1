@@ -1,0 +1,85 @@
+<!doctype html>
+<head>
+	
+	<title>Speech</title>
+</head>
+
+<body>
+
+	<div class="text">
+		<h2>Speech in Arabic to Convert Speech to Text</h2>
+		<p><button type="button" onclick="runSpeechRecognition()">Speech</button> &nbsp; <span id="start"></span></p>
+				<div id="output" class="h"></div>
+	</div>
+
+	
+
+	<script> 
+		
+		function runSpeechRecognition() {
+			var output = document.getElementById("output");
+			var start = document.getElementById("start");
+
+			
+			var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+			var recognition = new SpeechRecognition();
+			recognition.lang = 'ar';
+
+
+			recognition.onstart = function () {
+				start.innerHTML = "<small>.</small>";
+			};
+
+			recognition.onspeechend = function () {
+				start.innerHTML = "<small>.</small>";
+				recognition.stop();
+			}
+
+			
+			recognition.onresult = function (event) {
+				var transcript = event.results[0][0].transcript;
+				var confidence = event.results[0][0].confidence;
+				output.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";output.classList.remove("h");
+			};
+
+			recognition.start();
+		}
+	</script>
+	
+	<style>
+		
+		body {
+			font-family: "Montserrat";
+		}
+		.text {
+			text-align: center;
+		}
+		
+        body {
+			background-color: #DEB5B3;
+			
+		}
+		.h {
+			display: none;
+		}
+		
+		button {
+			padding: 16px;
+			background-color: #BBC095;
+			color: #1F3F90;	
+			margin-bottom: 90px;
+		}
+
+		#output {
+			padding: 15px;
+			width: 100%;
+			line-height: 50px;
+			margin-bottom: 90px;
+		}
+
+		.z {
+			display: block;
+		}		
+	</style>
+</body>
+</html>
